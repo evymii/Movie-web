@@ -1,4 +1,5 @@
-const API_KEY = "d67d8bebd0f4ff345f6505c99e9d0289";
+const API_KEY =
+  process.env.NEXT_PUBLIC_TMDB_API_KEY || "d67d8bebd0f4ff345f6505c99e9d0289";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p";
 
