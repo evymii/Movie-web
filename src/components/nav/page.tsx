@@ -77,6 +77,7 @@ const Navigation = () => {
           <img
             src="/images/down.png"
             className="w-5 h-5 rounded justify-center items-center"
+            alt=""
           />
           <span className="font-medium">Genre</span>
         </button>

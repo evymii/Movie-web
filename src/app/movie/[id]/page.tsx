@@ -1,7 +1,6 @@
-import { Movie, Video, Genre } from "@/lib/types";
+import { Movie, Video, Genre, Crew, Cast } from "@/lib/types";
 import api from "@/lib/api";
 import Navigation from "@/components/nav/page";
-import MovieCard from "@/components/MovieCard";
 import TrailerButton from "@/components/TrailerButton";
 import Footer from "@/components/Footer";
 
@@ -109,8 +108,8 @@ const MoviePage = async ({ params }: MoviePageProps) => {
           <div>
             <h3 className="font-bold text-lg mb-2">Director</h3>
             <p className="text-gray-700">
-              {credits.crew.find((person) => person.job === "Director")?.name ||
-                "N/A"}
+              {credits.crew.find((person: Crew) => person.job === "Director")
+                ?.name || "N/A"}
             </p>
           </div>
           <div>
@@ -118,11 +117,11 @@ const MoviePage = async ({ params }: MoviePageProps) => {
             <p className="text-gray-700">
               {credits.crew
                 .filter(
-                  (person) =>
+                  (person: Crew) =>
                     person.job === "Writer" || person.job === "Screenplay"
                 )
                 .slice(0, 3)
-                .map((person) => person.name)
+                .map((person: Crew) => person.name)
                 .join(" • ") || "N/A"}
             </p>
           </div>
@@ -131,7 +130,7 @@ const MoviePage = async ({ params }: MoviePageProps) => {
             <p className="text-gray-700">
               {credits.cast
                 .slice(0, 3)
-                .map((actor) => actor.name)
+                .map((actor: Cast) => actor.name)
                 .join(" • ")}
             </p>
           </div>

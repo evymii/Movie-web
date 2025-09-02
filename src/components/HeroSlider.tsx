@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { Movie } from "@/lib/types";
-import api from "@/lib/api";
 import Link from "next/link";
 
 type HeroSliderProps = {
@@ -11,6 +10,30 @@ type HeroSliderProps = {
 const HeroSlider = ({ movies }: HeroSliderProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % (movies?.length || 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(
+      (prev) => (prev - 1 + (movies?.length || 1)) % (movies?.length || 1)
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  useEffect(() => {
+    if (!isAutoPlaying || !movies || movies.length === 0) return;
+
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, movies]);
 
   if (!movies || movies.length === 0) {
     return (
@@ -26,38 +49,12 @@ const HeroSlider = ({ movies }: HeroSliderProps) => {
     );
   }
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % movies.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + movies.length) % movies.length);
-  };
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-
-    const interval = setInterval(() => {
-      nextSlide();
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
-
   const currentMovie = movies[currentSlide];
 
   const getFallbackImage = (index: number) => {
     // Use slide movie images as backgrounds
     const slideImages = ["/images/slidemov1.jpeg", "/images/slidemov2.webp"];
     return slideImages[index % slideImages.length];
-  };
-
-  const getHorrorBackground = () => {
-    return "linear-gradient(135deg, #1a1a1a 0%, #2d1b1b 25%, #1a1a2e 50%, #16213e 75%, #0f0f23 100%)";
   };
 
   // Force Feature images to show

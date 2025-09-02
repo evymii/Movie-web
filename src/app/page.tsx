@@ -3,6 +3,7 @@ import MovieList from "@/components/MovieList";
 import HeroSlider from "@/components/HeroSlider";
 import Footer from "@/components/Footer";
 import api from "@/lib/api";
+import { Movie } from "@/lib/types";
 
 const Home = async () => {
   const [popularMovies, upcomingMovies, nowPlayingMovies, topRatedMovies] =
@@ -18,7 +19,7 @@ const Home = async () => {
       <Navigation />
       <HeroSlider
         movies={nowPlayingMovies.results
-          .filter((movie) => movie.backdrop_path)
+          .filter((movie: Movie) => movie.backdrop_path)
           .slice(0, 5)}
       />
       <div className="container mx-auto px-4 py-8">
